@@ -7,10 +7,48 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="media.css">
     <link rel="icon" href="/Images/favicon/logotip.ico" type="image/x-icon"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <title>Михаил Иванов</title>
 </head>
 <body>
     <div class="container">
+        <div class="rec"></div>
+        <div class="admin-space">
+            <div class="admin-login">
+                <div>Log in as administrator</div>
+                <form action="javascript:alert('success!')">
+                    <div>
+                        <p id="CheckPasswordMatch">Пароль</p>
+                        <input type="password" placeholder="Введите пароль">
+                        <input type="button" value="Send to server"> 
+                    </div>
+                </form>
+            </div>
+            <div class="admin">
+                <div class="header">
+                    <div>Admin panel</div>
+                    <input id="count" value=""></input>
+                </div>
+                <ul>
+                    <li><input type="checkbox">Card is glass?</li>
+                    <li><input type="checkbox">Alt promote</li>
+                    <li><input type="checkbox">Old item_cards</li>
+                    <li><input type="checkbox">Glass Theme (test)</li>
+                    <li>
+                        <form action="javascript:submit">
+                            <div>
+                                <p>Имя</p>
+                                <input type="text" placeholder="Проверка текста">
+                                <input type="submit">
+                            </div>
+                        </form>
+                    </li>
+                </ul>
+                <div class="hide">Свернуть</div>
+                <div class="show">Развернуть</div>
+            </div>
+        </div>
+        
         <div class="bg-container"></div>
         <div class="bs-card solid">
             <div class="logo"><img src="" alt=""></div>  
@@ -34,21 +72,136 @@
             </div>
             <div class="column">
                     <a href="https://langame.ru">
-                        <div class="item_card one">
+                        <div class="item_card bg one">
                             <img src="" alt="">
-                            <span class="name">Дизайн LANGAME</span>
+                            <span class="name">LANGAME Design</span>
                         </div>
                     </a>
                     <a href="https://my-study-projects.netlify.app/">
-                        <div class="item_card two">
+                        <div class="item_card bg two">
                             <img src="" alt="">
-                            <span class="name">Вёрстка</span>
+                            <span class="name">My Study Projects</span>
                         </div>
                     </a>
                         
             </div>
-            <div class="promote">Хотите также?<a href="https://t.me/miivanov_r">Напишите мне</a></div>
+            <div class="promote smpl">Хотите также?<a href="https://t.me/miivanov_r">Напишите мне</a></div>
         </div>
     </div>
+    <script>
+            var count = 0;
+            $('input').prop("checked", false);
+            
+            var i = 0;
+
+            var count = $("ul li").length;
+            $('#count').val(count);
+
+            var text = "Михаил Иванов";
+            $('.title .name').html(text);
+
+            var ap_password = "admin1610";
+            var password = "00000000";
+
+            $('.admin-login').hide();
+            $('.rec').click(function(){ 
+                i++;
+                if (i >=5) {
+                    $('.admin-login').slideDown();
+                    $('.rec').remove();
+                }
+            })
+
+                $(function(){
+                    $("input:password").on('keyup', function () {
+                        password = $("input:password").val();
+                        if (password != ap_password)
+                            $("#CheckPasswordMatch").html("Incorrect!").css("color","red");
+                        else {
+                            $("#CheckPasswordMatch").html("Correct!").css("color","green");
+                            alert(x);
+                        }
+                    });
+                    
+                    $('input:button').click(function(){
+                        if (password == ap_password){
+                            $('.admin').slideDown();
+                            $('.admin-login').slideUp();
+                        }      
+                    });
+                })
+
+            $('.admin form').submit(function() {
+                text = $( "form input:text" ).val();
+                $( ".title .name" ).html(text);
+            });
+            
+            $(".hide").click(function(){
+                $(".admin ul").slideToggle(512);
+                $(this).hide();
+                $(".show").show();
+                $("#count").css("opacity", "1");
+            })
+
+            $(".show").click(function(){
+                $(".admin ul").slideToggle(512);
+                $(this).hide();
+                $(".hide").show();
+                $("#count").css("opacity", "0");
+            })
+
+            $(".admin input:checkbox").eq(0).click(function(){
+                            $(".bs-card").toggleClass("solid");
+                            $(".bs-card").toggleClass("glass");
+                            
+            })
+            $(".admin input:checkbox").eq(1).click(function(){
+                            $(".promote").toggleClass("alt");
+            })
+            $(".admin input:checkbox").eq(2).click(function(){
+                            $(".item_card").toggleClass("bg");
+            })
+            $(".admin input:checkbox").eq(3).click(function(){
+                
+                if ($("input:checkbox").eq(0).is(':checked')){
+                    $("input:checkbox").eq(0).click();
+                }
+                if ($("input:checkbox").eq(1).is(':checked')){
+                    $("input:checkbox").eq(1).click();
+                }
+                if ($("input:checkbox").eq(2).is(':checked')){
+                    $("input:checkbox").eq(2).click();
+                }
+
+                if ($(this).is(':checked')){
+                    
+                    $("input:checkbox").eq(0).prop("disabled", true);
+                    $('li').eq(1).css('color','#64646440');
+                  
+                    $("input:checkbox").eq(1).prop("disabled", true);
+                    $('li').eq(2).css('color','#64646440');
+                    
+                    $("input:checkbox").eq(2).prop("disabled", true);
+                    $('li').eq(3).css('color','#64646440');
+                } else {
+                    $("input:checkbox").eq(0).prop("disabled", false);
+                    $('li').eq(1).css('color','#212121');
+
+                    $("input:checkbox").eq(1).prop("disabled", false);
+                    $('li').eq(2).css('color','#212121');
+
+                    $("input:checkbox").eq(2).prop("disabled", false);
+                    $('li').eq(3).css('color','#212121');
+                }
+
+                $(".bs-card").toggleClass("solid");
+                $(".bs-card").toggleClass("glass");
+                $(".item_card").toggleClass("bg");
+                $(".item_card").toggleClass("alt");
+                $(".icon_card").toggleClass("alt");
+                $(".title").toggleClass("alt");
+                $(".bg-container").toggleClass("alt");
+            })
+    </script>
 </body>
 </html>
